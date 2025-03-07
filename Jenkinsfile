@@ -10,7 +10,7 @@ pipeline {
         // Étape 1 : Récupération du code source
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Sarahbelaarabi/react.git'
+                git branch: 'main', url: 'https://github.com/Sarahbelaarabi/pipeline_react_teste1.git'
             }
         }
 
