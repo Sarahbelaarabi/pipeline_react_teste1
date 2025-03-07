@@ -34,7 +34,8 @@ pipeline {
         stage('start') {
             steps {
                 dir('pipeline') {
-                    sh 'npm start'
+                    sh 'npm start &'
+                    sleep 10
                 }
             }
         }        
