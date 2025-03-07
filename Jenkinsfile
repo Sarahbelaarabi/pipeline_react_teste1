@@ -22,6 +22,7 @@ pipeline {
 
             }
         }
+        }
         stage('Installation des Dépendances') {
             steps {
                 sh 'npm install'
