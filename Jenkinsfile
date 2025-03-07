@@ -47,6 +47,7 @@ pipeline {
           // Étape 4 : Construire l'image Docker
         stage('Construire l\'image Docker') {
             steps {
+                sh 'docker --version'
                 dir('pipeline') {
                     sh 'docker build -t pipeline-react .'
                 }
