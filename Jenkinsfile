@@ -48,7 +48,7 @@ pipeline {
         stage('Construire l\'image Docker') {
             steps {
                 dir('pipeline') {
-                    sh 'docker build -t pipeline-react'
+                    sh 'docker build -t pipeline-react .'
                 }
             }
         }
