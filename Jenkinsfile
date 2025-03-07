@@ -34,10 +34,12 @@ pipeline {
         stage('start') {
             steps {
                 dir('pipeline') {
-                    sh 'npm start &'
-                    // sleep 10
+                    sh 'nohup npm start &'
                     // "&" => cela indique à Jenkins de lancer la commande et de ne pas attendre qu'elle se termine pour passer à l'étape
                    // => Si tu ne mets pas &, Jenkins attendra que le serveur React ait fini de se lancer avant de continuer à la prochaine étape
+                    sleep 10
+                    // had sleep khedmnna biha 3la 9bl "temps de demarage "  bch serveur se lance et soit accessible car des fois pipeline jenkins ktdoz l'etape suivant bla mtsna bzaff 
+                    
                 }
             }
         }        
