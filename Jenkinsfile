@@ -25,18 +25,25 @@ pipeline {
         }
         stage('Installation des Dépendances') {
             steps {
-                sh 'npm install'
+                dir('pipeline') {
+                    sh 'npm install'
+                }
+                
             }
         }
 
         stage('Tests') {
             steps {
-                sh 'npm test'
+                dir('pipeline') {
+                    sh 'npm test'
+                }
             }
         }
         stage('Build') {
             steps {
-                sh 'npm run build'
+                dir('pipeline') {
+                     sh 'npm run build'
+                }
             }
         }
     }
