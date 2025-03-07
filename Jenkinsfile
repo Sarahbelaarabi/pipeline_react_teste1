@@ -12,6 +12,16 @@ pipeline {
             }
         }
 
+        stage('acceder a le projet react ') {
+            steps{
+                script {
+        
+                    if (!fileExists('pipeline/package.json')) {
+                        error("Le dossier 'pipeline' ou le fichier 'package.json' est manquant !")
+                    }
+
+            }
+        }
         stage('Installation des Dépendances') {
             steps {
                 sh 'npm install'
