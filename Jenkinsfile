@@ -2,26 +2,22 @@ pipeline {
     agent any
 
     tools {
-        // Spécifiez la version de Node.js à utiliser
         nodejs 'node20'
     }
 
     stages {
-        // Étape 1 : Récupération du code source
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Sarahbelaarabi/pipeline_react_teste1.git'
             }
         }
 
-        // Étape 2 : Installation des dépendances
         stage('Installation des Dépendances') {
             steps {
                 sh 'npm install'
             }
         }
 
-        // Étape 3 : Exécution des tests
         stage('Tests') {
             steps {
                 sh 'npm test'
