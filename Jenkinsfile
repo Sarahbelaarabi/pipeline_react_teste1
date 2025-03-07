@@ -47,7 +47,7 @@ pipeline {
           // Étape 4 : Construire l'image Docker
         stage('Construire l\'image Docker') {
             steps {
-                sh 'docker --version'
+                // sh 'docker --version'                ssh your-jenkins-server
                 dir('pipeline') {
                     sh 'docker build -t pipeline-react .'
                 }
