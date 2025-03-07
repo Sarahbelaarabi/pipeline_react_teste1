@@ -31,7 +31,13 @@ pipeline {
                 
             }
         }
-
+        stage('start') {
+            steps {
+                dir('pipeline') {
+                    sh 'npm start'
+                }
+            }
+        }        
         stage('Tests') {
             steps {
                 dir('pipeline') {
