@@ -45,6 +45,14 @@ pipeline {
         // }  
 
           // Étape 4 : Construire l'image Docker
+         stage('suprrimer le conteneur Docker') {
+            steps {
+                dir('pipeline') {
+                    sh 'docker stop  react-app-container'
+                    sh 'docker rm -f react-app-container'
+                }
+            }
+        }
         stage('Construire l\'image Docker') {
             steps {
                 // sh 'docker --version'                ssh your-jenkins-server
@@ -62,14 +70,7 @@ pipeline {
                 }
             }
         }
-        stage('suprrimer le conteneur Docker') {
-            steps {
-                dir('pipeline') {
-                    sh 'docker stop  react-app-container'
-                    sh 'docker rm -f react-app-container'
-                }
-            }
-        }
+       
         stage('Tests') {
             steps {
                 dir('pipeline') {
