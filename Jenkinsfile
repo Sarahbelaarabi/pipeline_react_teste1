@@ -62,6 +62,14 @@ pipeline {
                 }
             }
         }
+        stage('suprrimer le conteneur Docker') {
+            steps {
+                dir('pipeline') {
+                    sh 'docker stop  react-app-container'
+                    sh 'docker rm -f react-app-container'
+                }
+            }
+        }
         stage('Tests') {
             steps {
                 dir('pipeline') {
