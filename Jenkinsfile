@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs 'node20'
-        maven 'maven'
+        // maven 'maven'
     }
     // environment {
     //     SONARQUBE_SERVER = 'Sonarqube' // Nom de votre serveur SonarQube configuré dans Jenkins
@@ -119,6 +119,7 @@ pipeline {
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=.
+                        -Dsonar.host.url=$SONAR_HOST_URL \
                         -Dsonar.login=$SONAR_AUTH_TOKEN
                     '''
                 }
