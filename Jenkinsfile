@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs 'node20'
-        maven 'maven 3.9.9'
+        maven 'maven'
     }
     // environment {
     //     SONARQUBE_SERVER = 'Sonarqube' // Nom de votre serveur SonarQube configuré dans Jenkins
