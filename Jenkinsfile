@@ -87,6 +87,12 @@ pipeline {
             }
         }
     }
+    stage('Analyser avec sonaqube') {
+        steps {
+            dir('pipeline') {
+                sh 'sonar-scanner'
+            }
+        }
 
     post {
         success {
@@ -96,4 +102,5 @@ pipeline {
             echo 'Le pipeline a échoué, PAS GRAVE SARAH !'
         }
     }
+}
 }
