@@ -107,13 +107,14 @@ pipeline {
         stage('Analyser avec sonaqube') {
             environment {
                 SONAR_HOST_URL = 'http://localhost:9000'
-                SONAR_AUTH_TOKEN = credentials('sonarqube')
+                // SONAR_AUTH_TOKEN = credentials('sonarqube')
                 // scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
             }
             steps {
                 dir('pipeline') {
-                    sh '''
+                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                       sh '''
                         /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
@@ -121,7 +122,8 @@ pipeline {
                         -Dsonar.sources=.
                         -Dsonar.host.url=$SONAR_HOST_URL \
                         -Dsonar.login=$SONAR_AUTH_TOKEN
-                    '''
+                    '''  
+                     }
                 }
             }
         }
