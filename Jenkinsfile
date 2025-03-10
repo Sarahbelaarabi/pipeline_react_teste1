@@ -97,7 +97,7 @@ pipeline {
              steps {
                 //  withSonarQubeEnv('Sonarqube') {
                       dir('pipeline') {
-                        sh 'sonar-scanner'
+                        sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN'
                 }
                 //  }
             }
