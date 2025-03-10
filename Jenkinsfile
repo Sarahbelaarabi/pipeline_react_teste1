@@ -90,17 +90,35 @@ pipeline {
                 }
             }
         }
+        // stage('Analyser avec sonaqube') {
+        //     environment {
+        //         SONAR_HOST_URL = 'http://localhost:9000'
+        //         SONAR_AUTH_TOKEN = credentials('sonarqube')
+        // }
+        //      steps {
+        //         //  withSonarQubeEnv('Sonarqube') {
+        //               dir('pipeline') {
+        //                 sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN'
+        //         }
+        //         //  }
+        //     }
+        // }
+
         stage('Analyser avec sonaqube') {
             environment {
                 SONAR_HOST_URL = 'http://localhost:9000'
                 SONAR_AUTH_TOKEN = credentials('sonarqube')
-        }
-             steps {
-                //  withSonarQubeEnv('Sonarqube') {
-                      dir('pipeline') {
-                        sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN'
+            }
+            steps {
+                dir('pipeline') {
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=react_project \
+                        -Dsonar.projectName=ReactProject \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=.
+                    '''
                 }
-                //  }
             }
         }
     }
