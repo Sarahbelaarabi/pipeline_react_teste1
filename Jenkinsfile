@@ -34,6 +34,15 @@ pipeline {
                 
             }
         }
+        stage('Analyser avec sonaqube') {
+             steps {
+                 withSonarQubeEnv('Sonarqube') {
+                      dir('pipeline') {
+                        sh 'sonar-scanner'
+                }
+                 }
+            }
+        }
         // stage('start') {
         //     steps {
         //         dir('pipeline') {
@@ -89,15 +98,7 @@ pipeline {
                 }
             }
         }
-        stage('Analyser avec sonaqube') {
-             steps {
-                 withSonarQubeEnv('Sonarqube') {
-                      dir('pipeline') {
-                        sh 'sonar-scanner'
-                }
-                 }
-            }
-        }
+        
     }
     post {
         success {
