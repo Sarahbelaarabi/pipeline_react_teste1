@@ -113,7 +113,7 @@ pipeline {
             }
             steps {
                 dir('pipeline') {
-                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
                        sh '''
                         /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
                         -Dsonar.projectKey=react_project \
@@ -121,7 +121,7 @@ pipeline {
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=.
                         -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_AUTH_TOKEN
+                        -Dsonar.login=$SONAR_TOKEN
                     '''  
                      }
                 }
