@@ -97,7 +97,7 @@ pipeline {
              steps {
                 //  withSonarQubeEnv('Sonarqube') {
                       dir('pipeline') {
-                        sh 'mvn sonar-scanner'
+                        sh 'sonar-scanner'
                 }
                 //  }
             }
