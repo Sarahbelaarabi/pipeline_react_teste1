@@ -4,9 +4,6 @@ pipeline {
     tools {
         nodejs 'node20'
     }
-    // environment {
-    //             SONAR_HOST_URL = 'http://localhost:9000'
-    // }
 
     stages {
         stage('Checkout') {
