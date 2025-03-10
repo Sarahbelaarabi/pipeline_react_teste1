@@ -3,9 +3,9 @@ pipeline {
 
     tools {
         nodejs 'node20'
-         environment {
-        SONARQUBE_SERVER = 'SonarQubeServer' // Nom de votre serveur SonarQube configuré dans Jenkins
     }
+    environment {
+        SONARQUBE_SERVER = 'SonarQubeServer' // Nom de votre serveur SonarQube configuré dans Jenkins
     }
 
     stages {
