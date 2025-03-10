@@ -86,11 +86,11 @@ pipeline {
                 }
             }
         }
-    }
-    stage('Analyser avec sonaqube') {
-        steps {
-            dir('pipeline') {
-                sh 'sonar-scanner'
+        stage('Analyser avec sonaqube') {
+             steps {
+                dir('pipeline') {
+                     sh 'sonar-scanner'
+                }
             }
         }
     }
