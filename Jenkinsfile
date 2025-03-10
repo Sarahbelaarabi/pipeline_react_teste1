@@ -44,7 +44,8 @@ pipeline {
         //     }
         // }  
 
-          // Étape 4 : Construire l'image Docker
+
+        //  supprimer  le conteneur Docker  (drnaha bch nsupprimer l'ancien conteneur avant de construire un nouveau)
          stage('suprrimer le conteneur Docker') {
             steps {
                 dir('pipeline') {
@@ -62,7 +63,7 @@ pipeline {
             }
         }
 
-        // Étape 5 : Démarrer le conteneur Docker
+        //  Démarrer le conteneur Docker
         stage('Démarrer le conteneur Docker') {
             steps {
                 dir('pipeline') {
