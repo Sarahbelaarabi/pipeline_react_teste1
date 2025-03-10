@@ -108,6 +108,8 @@ pipeline {
             environment {
                 SONAR_HOST_URL = 'http://localhost:9000'
                 SONAR_AUTH_TOKEN = credentials('sonarqube')
+                scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+
             }
             steps {
                 dir('pipeline') {
