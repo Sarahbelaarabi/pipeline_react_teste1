@@ -108,13 +108,13 @@ pipeline {
             environment {
                 SONAR_HOST_URL = 'http://localhost:9000'
                 SONAR_AUTH_TOKEN = credentials('sonarqube')
-                scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                // scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
             }
             steps {
                 dir('pipeline') {
                     sh '''
-                        ${scannerHome}/bin/sonar-scanner \
+                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
