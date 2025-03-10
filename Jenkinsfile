@@ -112,7 +112,7 @@ pipeline {
             steps {
                 dir('pipeline') {
                     sh '''
-                        sonar-scanner \
+                        ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
