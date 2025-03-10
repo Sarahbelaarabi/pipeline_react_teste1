@@ -90,12 +90,16 @@ pipeline {
             }
         }
         stage('Analyser avec sonaqube') {
+            environment {
+                SONAR_HOST_URL = 'http://localhost:9000'
+                SONAR_AUTH_TOKEN = credentials('sonarqube')
+        }
              steps {
-                 withSonarQubeEnv('Sonarqube') {
+                //  withSonarQubeEnv('Sonarqube') {
                       dir('pipeline') {
                         sh 'sonar-scanner'
                 }
-                 }
+                //  }
             }
         }
     }
