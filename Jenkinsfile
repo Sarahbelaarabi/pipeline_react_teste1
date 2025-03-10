@@ -3,16 +3,9 @@ pipeline {
 
     tools {
         nodejs 'node20'
-        // maven 'maven'
     }
-    // environment {
-    //     SONARQUBE_SERVER = 'Sonarqube' // Nom de votre serveur SonarQube configuré dans Jenkins
-    // }
     environment {
                 SONAR_HOST_URL = 'http://localhost:9000'
-                // SONAR_AUTH_TOKEN = credentials('sonarqube')
-                // scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-
     }
 
     stages {
@@ -96,20 +89,7 @@ pipeline {
                 }
             }
         }
-        // stage('Analyser avec sonaqube') {
-        //     environment {
-        //         SONAR_HOST_URL = 'http://localhost:9000'
-        //         SONAR_AUTH_TOKEN = credentials('sonarqube')
-        // }
-        //      steps {
-        //         //  withSonarQubeEnv('Sonarqube') {
-        //               dir('pipeline') {
-        //                 sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN'
-        //         }
-        //         //  }
-        //     }
-        // }
-
+       
         stage('Analyser avec sonaqube') {
             steps {
                 dir('pipeline') {
