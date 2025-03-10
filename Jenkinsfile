@@ -48,6 +48,38 @@ pipeline {
         // }  
 
 
+         stage('Analyser avec sonarqube') {
+            steps {
+                dir('pipeline') {
+                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
+                       sh '''
+                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
+                        -Dsonar.projectKey=react_project \
+                        -Dsonar.projectName=ReactProject \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=. \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''  
+                     }
+                }
+            }
+        }
+         stage('Build') {
+            steps {
+                dir('pipeline') {
+                     sh 'npm run build'
+                }
+            }
+        }
+
+         stage('Tests') {
+            steps {
+                dir('pipeline') {
+                    sh 'npm test'
+                }
+            }
+        }
+
         //  supprimer  le conteneur Docker  (drnaha bch nsupprimer l'ancien conteneur avant de construire un nouveau)
          stage('suprrimer le conteneur Docker') {
             steps {
@@ -74,38 +106,7 @@ pipeline {
                 }
             }
         }
-       
-        stage('Tests') {
-            steps {
-                dir('pipeline') {
-                    sh 'npm test'
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                dir('pipeline') {
-                     sh 'npm run build'
-                }
-            }
-        }
-       
-        stage('Analyser avec sonaqube') {
-            steps {
-                dir('pipeline') {
-                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
-                       sh '''
-                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
-                        -Dsonar.projectKey=react_project \
-                        -Dsonar.projectName=ReactProject \
-                        -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=. \
-                        -Dsonar.login=$SONAR_TOKEN
-                    '''  
-                     }
-                }
-            }
-        }
+
     }
     post {
         success {
