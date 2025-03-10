@@ -90,10 +90,10 @@ pipeline {
 
     post {
         success {
-            echo 'Le pipeline a réussi !'
+            echo 'Le pipeline a réussi BRAVO SARAH !'
         }
         failure {
-            echo 'Le pipeline a échoué.'
+            echo 'Le pipeline a échoué, PAS GRAVE SARAH !'
         }
     }
 }
