@@ -5,7 +5,7 @@ pipeline {
         nodejs 'node20'
     }
     environment {
-        SONARQUBE_SERVER = 'SonarQubeServer' // Nom de votre serveur SonarQube configuré dans Jenkins
+        SONARQUBE_SERVER = 'Sonarqube' // Nom de votre serveur SonarQube configuré dans Jenkins
     }
 
     stages {
@@ -91,7 +91,7 @@ pipeline {
         }
         stage('Analyser avec sonaqube') {
              steps {
-                 withSonarQubeEnv('SonarQubeServer') {
+                 withSonarQubeEnv('Sonarqube') {
                       dir('pipeline') {
                         sh 'sonar-scanner'
                 }
