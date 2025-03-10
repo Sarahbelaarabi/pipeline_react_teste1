@@ -119,8 +119,7 @@ pipeline {
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
-                        -Dsonar.sources=.
-                        -Dsonar.host.url=$SONAR_HOST_URL \
+                        -Dsonar.sources=. \
                         -Dsonar.login=$SONAR_TOKEN
                     '''  
                      }
