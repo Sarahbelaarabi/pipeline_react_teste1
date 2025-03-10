@@ -93,7 +93,7 @@ pipeline {
                 sh 'sonar-scanner'
             }
         }
-
+    }
     post {
         success {
             echo 'Le pipeline a réussi BRAVO SARAH !'
