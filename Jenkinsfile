@@ -8,12 +8,12 @@ pipeline {
     // environment {
     //     SONARQUBE_SERVER = 'Sonarqube' // Nom de votre serveur SonarQube configuré dans Jenkins
     // }
-    // environment {
-    //             SONAR_HOST_URL = 'http://localhost:9000'
-    //             // SONAR_AUTH_TOKEN = credentials('sonarqube')
-    //             // scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+    environment {
+                SONAR_HOST_URL = 'http://localhost:9000'
+                // SONAR_AUTH_TOKEN = credentials('sonarqube')
+                // scannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
-    // }
+    }
 
     stages {
         stage('Checkout') {
@@ -120,7 +120,7 @@ pipeline {
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
                         -Dsonar.sources=.
-                        -Dsonar.host.url=http://localhost:9000\
+                        -Dsonar.host.url=$SONAR_HOST_URL \
                         -Dsonar.login=$SONAR_TOKEN
                     '''  
                      }
