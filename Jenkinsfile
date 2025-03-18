@@ -13,6 +13,11 @@ pipeline {
             }
         }
         stage('Checkout') {
+             steps {
+                sh 'git fetch -v --tags --force --progress -- https://github.com/Sarahbelaarabi/pipeline_react_teste1.git +refs/heads/*:refs/remotes/origin/*'
+         }
+        }
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Sarahbelaarabi/pipeline_react_teste1.git'
                 
