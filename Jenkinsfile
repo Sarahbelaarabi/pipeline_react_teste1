@@ -5,10 +5,16 @@ pipeline {
         nodejs 'node20'
     }
 
+
     stages {
+        stage('Nettoyer le workspace') {
+            steps {
+                cleanWs() // Nettoie le workspace avant de commencer
+            }
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Sarahbelaarabi/pipeline_react_teste1.git'
+                
             }
         }
 
