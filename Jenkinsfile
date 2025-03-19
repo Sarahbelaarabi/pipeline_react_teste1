@@ -100,14 +100,11 @@ pipeline {
         // }
         stage('Vérifier le Quality Gate') {
             steps {
-            
                 script {
-                    // timeout(time: 5, unit: 'MINUTES'){
                         def qualitygates = waitForQualityGate()
                     if (qualitygates.status != 'OK') {
                         error "Le Quality Gate a échoué : ${qualitygates.status}"
                         }
-                    // }
                 }
             }
         }
