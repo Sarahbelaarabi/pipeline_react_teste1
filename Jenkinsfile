@@ -75,6 +75,7 @@ pipeline {
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
+                        -sonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/public/** \
                         -Dsonar.sources=. \
                         -Dsonar.login=$SONAR_TOKEN
                     ''' 
