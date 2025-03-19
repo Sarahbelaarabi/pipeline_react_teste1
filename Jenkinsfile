@@ -93,6 +93,11 @@ pipeline {
             }
         }
 
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
         // stage('Vérifier le Quality Gate') {
         //     steps {
         //         script {
