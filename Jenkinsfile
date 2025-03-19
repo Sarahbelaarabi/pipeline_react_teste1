@@ -100,14 +100,22 @@ pipeline {
         // }
         stage('Vérifier le Quality Gate') {
             steps {
-                script {
-                    // timeout(time: 5, unit: 'MINUTES'){
-                        def qualitygates = waitForQualityGate()
-                    if (qualitygates.status != 'OK') {
-                        error "Le Quality Gate a échoué : ${qualitygates.status}"
+                dir('pipeline') {
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Le Quality Gate a échoué : ${qg.status}"
                         }
-                    // }
+                    }
                 }
+                // script {
+                //     // timeout(time: 5, unit: 'MINUTES'){
+                //         def qualitygates = waitForQualityGate()
+                //     if (qualitygates.status != 'OK') {
+                //         error "Le Quality Gate a échoué : ${qualitygates.status}"
+                //         }
+                //     // }
+                // }
             }
         }
         
