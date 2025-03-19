@@ -1,7 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [count, setCount] = useState(0); // Utilisation correcte de useState pour le compteur
+
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,12 +24,14 @@ function App() {
           Learn React
         </a>
       </header>
+      <main>
+        <h1>Counter Example</h1>
+        <p>Current Count: {count}</p>
+        <button onClick={increment}>Increment</button>
+        <button onClick={decrement}>Decrement</button>
+      </main>
     </div>
   );
 }
 
-export default App;
-export defalut App;
-export default App;
-export default App;
 export default App;
