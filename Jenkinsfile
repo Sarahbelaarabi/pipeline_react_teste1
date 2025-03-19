@@ -88,6 +88,9 @@ pipeline {
         }
         
         stage('Vérifier le Quality Gate') {
+            environment {
+                SONAR_HOST_URL = 'http://localhost:9000'
+        }
             steps {
                  script {
             // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
