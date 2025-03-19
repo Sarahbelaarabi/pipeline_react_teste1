@@ -93,7 +93,8 @@ pipeline {
                 SONAR_HOST_URL = 'http://localhost:9000'
         }
             steps {
-                 script {
+                dir('pipeline'){
+                    script {
                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]){
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
@@ -101,6 +102,8 @@ pipeline {
                         }
                     }
             // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
+                }
+                    
                 }
             }
        }
