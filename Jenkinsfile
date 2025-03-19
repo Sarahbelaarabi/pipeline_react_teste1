@@ -75,8 +75,8 @@ pipeline {
                         -Dsonar.projectKey=react_project \
                         -Dsonar.projectName=ReactProject \
                         -Dsonar.projectVersion=1.0 \
+                        Dsonar.sources=src \
                         -sonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/public/** \
-                        -Dsonar.sources=src \
                         -Dsonar.login=$SONAR_TOKEN
                     ''' 
                     // /var/.. => C'est le chemin vers le dossier où SonarQube est installé sur le serveur Jenkins.
