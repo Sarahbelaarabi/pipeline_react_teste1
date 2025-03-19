@@ -23,7 +23,7 @@ function App() {
 }
 
 export default App;
-//export defalut App;
-//export default App;
-//export default App;
-//export default App;
+export defalut App;
+export default App;
+export default App;
+export default App;
