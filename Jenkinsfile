@@ -76,7 +76,7 @@ pipeline {
                             -Dsonar.projectName=ReactProject \
                             -Dsonar.projectVersion=1.0 \
                             -Dsonar.sources=src \
-                            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/public/** \
+                            -Dsonar.exclusions=**/node_modules/**,**/public/** \
                             -Dsonar.login=$SONAR_TOKEN
                          ''' 
                     // /var/.. => C'est le chemin vers le dossier où SonarQube est installé sur le serveur Jenkins.
@@ -96,7 +96,7 @@ pipeline {
         stage('Vérifier le Quality Gate') {
             steps {
                 script {
-                    def qualitygates = waitForQualityGate(time: 10, unit: 'MINUTES')
+                    def qualitygates = waitForQualityGate()
                     if (qualitygates.status != 'OK') {
                         error "Le Quality Gate a échoué : ${qualitygates.status}"
                     }
