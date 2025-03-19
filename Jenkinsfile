@@ -93,23 +93,23 @@ pipeline {
             }
         }
 
-        stage("Quality gate") {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-        // stage('Vérifier le Quality Gate') {
+        // stage("Quality gate") {
         //     steps {
-        //         script {
-        //             timeout(time: 5, unit: 'MINUTES'){
-        //                 def qualitygates = waitForQualityGate()
-        //             if (qualitygates.status != 'OK') {
-        //                 error "Le Quality Gate a échoué : ${qualitygates.status}"
-        //                 }
-        //             }
-        //         }
+        //         waitForQualityGate abortPipeline: true
         //     }
         // }
+        stage('Vérifier le Quality Gate') {
+            steps {
+                script {
+                    // timeout(time: 5, unit: 'MINUTES'){
+                        def qualitygates = waitForQualityGate()
+                    if (qualitygates.status != 'OK') {
+                        error "Le Quality Gate a échoué : ${qualitygates.status}"
+                        }
+                    // }
+                }
+            }
+        }
         
         
          stage('Build & Test') {
