@@ -82,6 +82,7 @@ pipeline {
                     // -Dsonar.projectVersion => C'est la version de ton projet.
                     // -Dsonar.sources => C'est le chemin vers le dossier contenant ton code source.
                     // -Dsonar.login => C'est le token que tu as généré dans SonarQube pour ton projet. 
+                    
                      }
                 }
             }
@@ -93,11 +94,13 @@ pipeline {
         }
             steps {
                  script {
-            // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
-            def qualityGate = waitForQualityGate()
-            if (qualityGate.status != 'OK') {
-                error "Le Quality Gate a échoué : ${qualityGate.status}"
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]){
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Le Quality Gate a échoué : ${qg.status}"
+                        }
                     }
+            // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
                 }
             }
        }
