@@ -129,6 +129,20 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'sarabelaarabi', usernameVariable: 'DOCKER_HUB_USER', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                        sh '''
+                            docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+                            docker tag pipeline-react $DOCKER_HUB_USER/pipeline-react:latest
+                            docker push $DOCKER_HUB_USER/pipeline-react:latest
+                        '''
+                    }
+                }
+            }
+        }
+
     }
     post {
         success {
