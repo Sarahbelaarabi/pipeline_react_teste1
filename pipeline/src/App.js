@@ -24,28 +24,16 @@
 
 // export default App;
 
+
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [count, setCount] = useState(0);
 
-  // Un effet inutile qui ne dépend d'aucune variable
-  useEffect(() => {
-    console.log("Ce useEffect ne sert à rien !");
-  }, []);
-
-  // Une fonction non utilisée (code smell)
-  const unusedFunction = () => {
-    console.log("Cette fonction n'est jamais utilisée !");
-  };
-
-  // Une division par zéro potentielle (bug)
-  const divideByZero = () => {
-    const result = 10 / count;
-    console.log("Résultat de la division :", result);
-  };
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
 
   return (
     <div className="App">
@@ -62,13 +50,13 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={() => setCount(count + 1)}>
-          Cliquez-moi ({count})
-        </button>
-        <button onClick={divideByZero}>
-          Diviser par zéro
-        </button>
       </header>
+      <main>
+        <h1>Counter Example</h1>
+        <p>Current Count: {count}</p>
+        <button onClick={increment}>Increment</button>
+        <button onClick={decrement}>Decrement</button>
+      </main>
     </div>
   );
 }
