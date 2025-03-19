@@ -30,7 +30,7 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0); // Utilisation correcte de useState pour le compteur
 
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
