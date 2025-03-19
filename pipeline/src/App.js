@@ -28,8 +28,6 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-// Définition du type pour les entrées du formulaire
-// Utilisation d'un commentaire JSDoc pour documenter la structure
 /**
  * @typedef {Object} FormData
  * @property {number} number1 - Premier nombre
@@ -37,8 +35,8 @@ import "./App.css";
  */
 
 function App() {
-  const [formData, setFormData] = useState<FormData>({ number1: 0, number2: 0 });
-  const [result, setResult] = useState<number | null>(null);
+  const [formData, setFormData] = useState({ number1: 0, number2: 0 });
+  const [result, setResult] = useState(null);
 
   // Fonction pour mettre à jour les inputs
   const handleChange = useCallback((e) => {
