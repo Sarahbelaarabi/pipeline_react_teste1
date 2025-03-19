@@ -17,13 +17,6 @@ function App() {
         >
           Learn React
         </a>
-
-        {/* Code dupliqué, violation de la règle des lignes dupliquées */}
-        <p>Learn React</p> 
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">Learn React</a> {/* Dupliqué */}
-
-        {/* Ajouter du code qui génère des issues */}
-        <button>Non utilisé</button> {/* Provoque un problème de variable non utilisée */}
       </header>
     </div>
   );
