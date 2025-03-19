@@ -54,6 +54,7 @@ pipeline {
         }
             steps {
                 dir('pipeline') {
+
                     // version 1 : 
                             // withCredentials => Cette commande est utilisée pour gérer les informations sensibles (comme les tokens, mots de passe, etc.) de manière sécurisée dans Jenkins.
                             // Ces informations sont trop importantes pour être écrites directement dans le code (car n'importe qui pourrait les voir). Donc, Jenkins les stocke de manière sécurisée dans un coffre-fort (appelé "Credentials" dans Jenkins).
@@ -67,7 +68,8 @@ pipeline {
                             // Un mot de passe.
                             // Une clé d'API.
                         // Ces informations sont trop importantes pour être écrites directement dans le code (car n'importe qui pourrait les voir). Donc, Jenkins les stocke de manière sécurisée dans un coffre-fort (appelé "Credentials" dans Jenkins).
-                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv('sonarqube'){
+                         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
                        sh '''
                         /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
                         -Dsonar.projectKey=react_project \
@@ -84,29 +86,23 @@ pipeline {
                     // -Dsonar.login => C'est le token que tu as généré dans SonarQube pour ton projet. 
                     
                      }
+
+                    }
+                }
+            }
+        }
+
+        stage('Vérifier le Quality Gate') {
+            steps {
+                script {
+                    def qualitygates = waitForQualityGate()
+                    if (qualitygates.status != 'OK') {
+                        error "Le Quality Gate a échoué : ${qualitygates.status}"
+                    }
                 }
             }
         }
         
-        stage('Vérifier le Quality Gate') {
-            environment {
-                SONAR_HOST_URL = 'http://localhost:9000'
-        }
-            steps {
-                dir('pipeline'){
-                    script {
-                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]){
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            error "Le Quality Gate a échoué : ${qg.status}"
-                        }
-                    }
-            // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
-                }
-                    
-                }
-            }
-       }
         
          stage('Build & Test') {
             steps {
