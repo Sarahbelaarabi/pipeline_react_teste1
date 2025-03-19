@@ -70,23 +70,15 @@ pipeline {
                         // Ces informations sont trop importantes pour être écrites directement dans le code (car n'importe qui pourrait les voir). Donc, Jenkins les stocke de manière sécurisée dans un coffre-fort (appelé "Credentials" dans Jenkins).
                     withSonarQubeEnv('sonarqube'){
                          withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
-                    //    sh '''
-                    //     /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
-                    //     -Dsonar.projectKey=react_project \
-                    //     -Dsonar.projectName=ReactProject \
-                    //     -Dsonar.projectVersion=1.0 \
-                    //     -Dsonar.sources=. \
-                    //     -Dsonar.login=$SONAR_TOKEN
-                    // ''' 
-                    sh '''
-    /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
-    -Dsonar.projectKey=react_project \
-    -Dsonar.projectName=ReactProject \
-    -Dsonar.projectVersion=1.0 \
-    -Dsonar.sources=src \
-    -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/public/** \
-    -Dsonar.login=$SONAR_TOKEN
-'''
+                       sh '''
+                        /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
+                        -Dsonar.projectKey=react_project \
+                        -Dsonar.projectName=ReactProject \
+                        -Dsonar.projectVersion=1.0 \
+                        -sonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/public/** \
+                        -Dsonar.sources=src \
+                        -Dsonar.login=$SONAR_TOKEN
+                    ''' 
                     // /var/.. => C'est le chemin vers le dossier où SonarQube est installé sur le serveur Jenkins.
                     // -Dsonar.projectKey => C'est l'identifiant unique de ton projet dans SonarQube. Il doit être unique pour chaque projet.
                     // -Dsonar.projectName => C'est le nom de ton projet dans SonarQube.
@@ -104,7 +96,7 @@ pipeline {
         stage('Vérifier le Quality Gate') {
             steps {
                 script {
-                    def qualitygates = waitForQualityGate()
+                    def qualitygates = waitForQualityGate(time: 10, unit: 'MINUTES')
                     if (qualitygates.status != 'OK') {
                         error "Le Quality Gate a échoué : ${qualitygates.status}"
                     }
