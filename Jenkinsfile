@@ -87,6 +87,18 @@ pipeline {
             }
         }
         
+        stage('Vérifier le Quality Gate') {
+            steps {
+                 script {
+            // Attendre que SonarQube termine l'analyse et vérifier le Quality Gate
+            def qualityGate = waitForQualityGate()
+            if (qualityGate.status != 'OK') {
+                error "Le Quality Gate a échoué : ${qualityGate.status}"
+                    }
+                }
+            }
+       }
+        
          stage('Build & Test') {
             steps {
                 dir('pipeline') {
