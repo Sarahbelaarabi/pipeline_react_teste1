@@ -112,6 +112,7 @@ pipeline {
             steps {
                 dir('pipeline') {
                     sh 'trivy fs . > trivyfs.txt'
+                    sh 'cat trivyfs.txt'
                 }
                 //tirvy va scanner le fichier systeme (code source, binaires, dépendances...) et  enregistrer les resultats dans un fichier txt
                 // sh 'trivy fs . > trivyfs.txt'
@@ -139,8 +140,8 @@ pipeline {
         }
         stage('scanner docker image avec trivy'){
             steps{
-                sh' trivy image --severity CRITICAL, HIGH pipeline-react'
-                sh'trivy image --format html --output trivy-results.html pipeline-react'
+                sh' trivy image --severity CRITICAL, HIGH pipeline-react:latest'
+                sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
             }
 
         }
