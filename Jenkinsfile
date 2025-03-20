@@ -160,7 +160,7 @@ pipeline {
                 sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
                 // sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
                 sh 'trivy image --format template --template "@contrib/html.tpl" -o trivy-results.html pipeline-react:latest'
-                sh 'start trivy-results.html'
+               echo 'Trivy scan completed. Results saved to trivy-results.html'
             }
 
         }
