@@ -108,9 +108,13 @@ pipeline {
                 }
             }
         }
-        stage ("Trivy Scan") {
+        stage ("scanner le fichier systeme avec trivy") {
             steps {
-                sh 'trivy fs . > trivyfs.txt'
+                dir('pipeline') {
+                    sh 'trivy fs . > trivyfs.txt'
+                }
+                //tirvy va scanner le fichier systeme (code source, binaires, dépendances...) et  enregistrer les resultats dans un fichier txt
+                // sh 'trivy fs . > trivyfs.txt'
                 }
         }
          stage('Build & Test') {
@@ -133,20 +137,13 @@ pipeline {
                 }
             }
         }
-        // stage('Scan Docker Image avec Trivy') { 
-        //     steps {
-        //         script {
-        //             // Vérifier si Trivy est installé
-        //             sh 'trivy --version'
+        stage(scanner docker image avec trivy){
+            steps{
+                sh' trivy image --severity CRITICAL, HIGH pipeline-react'
+                sh'trivy image --format html --output trivy-results.html pipeline-react'
+            }
 
-        //             // Scanner l’image Docker locale (Échec si vulnérabilités HIGH ou CRITICAL)
-        //             sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL pipeline-react'
-
-        //             // Générer un rapport JSON
-        //             sh 'trivy image --format json -o trivy-report.json pipeline-react'
-        //         }
-        //     }
-        // }
+        }
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
