@@ -140,7 +140,7 @@ pipeline {
                 }
             }
         }
-        // ankhdm bhada au cas ou hbst pipeline f stage dyal docker operations
+// ankhdm bhada au cas ou hbst pipeline f stage dyal docker operations
         //  stage('Docker operations(Stop & Remove), Build & Run') {
         //     steps {
         //         dir('pipeline') {
