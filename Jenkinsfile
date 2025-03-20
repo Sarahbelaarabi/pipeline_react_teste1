@@ -129,20 +129,20 @@ pipeline {
                 }
             }
         }
-        // stage('Scan Docker Image avec Trivy') { 
-        //     steps {
-        //         script {
-        //             // Vérifier si Trivy est installé
-        //             sh 'trivy --version'
+        stage('Scan Docker Image avec Trivy') { 
+            steps {
+                script {
+                    // Vérifier si Trivy est installé
+                    sh 'trivy --version'
 
-        //             // Scanner l’image Docker locale (Échec si vulnérabilités HIGH ou CRITICAL)
-        //             sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL pipeline-react'
+                    // Scanner l’image Docker locale (Échec si vulnérabilités HIGH ou CRITICAL)
+                    sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL pipeline-react'
 
-        //             // Générer un rapport JSON
-        //             sh 'trivy image --format json -o trivy-report.json pipeline-react'
-        //         }
-        //     }
-        // }
+                    // Générer un rapport JSON
+                    sh 'trivy image --format json -o trivy-report.json pipeline-react'
+                }
+            }
+        }
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
