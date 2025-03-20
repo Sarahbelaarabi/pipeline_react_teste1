@@ -133,8 +133,8 @@ pipeline {
          stage('Docker operations(Stop & Remove), Build & Run') {
             steps {
                 dir('pipeline') {
-                    sh 'docker stop  react-app-container'
-                    sh 'docker rm -f react-app-container'
+                    // sh 'docker stop  react-app-container'
+                    // sh 'docker rm -f react-app-container'
                     sh 'docker build -t pipeline-react .'
                     sh 'docker run -d -p 3000:3000 --name react-app-container pipeline-react'
                 }
