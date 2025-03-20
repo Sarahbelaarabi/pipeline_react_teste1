@@ -160,6 +160,7 @@ pipeline {
                 sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
                 // sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
                 sh 'trivy image --format template --template @./html.tpl --output trivy-results.html pipeline-react:latest'
+                sh 'xdg-open trivy-results.html'
             }
 
         }
