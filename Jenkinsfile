@@ -112,7 +112,7 @@ pipeline {
             steps {
                 sh 'trivy fs . > trivyfs.txt'
                 }
-   ``` }
+        }
          stage('Build & Test') {
             steps {
                 dir('pipeline') {
