@@ -159,8 +159,7 @@ pipeline {
             steps{
                 sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
                 // sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
-                sh 'trivy image --fromat template --template @./html.tpl -o trivy-results.html pipeline-react:latest'
-
+                sh 'trivy image --format template --template @./html.tpl --output trivy-results.html pipeline-react:latest'
             }
 
         }
