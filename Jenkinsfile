@@ -157,10 +157,8 @@ pipeline {
         // }
         stage('scanner docker image avec trivy'){
             steps{
-                script {
-                    sh 'trivy image --severity CRITICAL, HIGH pipeline-react:latest'
-                    sh 'trivy image --format html --output trivy-results.html pipeline-react:latest'
-                }
+                sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
+                sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
             }
 
         }
