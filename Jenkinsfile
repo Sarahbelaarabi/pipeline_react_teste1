@@ -157,10 +157,9 @@ pipeline {
         // }
         stage('scanner docker image avec trivy'){
             steps{
-                sh' trivy image --severity CRITICAL,HIGH pipeline-react'
+                sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
                 // sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
-                sh 'trivy image --format template --template "./html.tpl" -o trivy-results.html pipeline-react'
-               echo 'Trivy scan completed. Results saved to trivy-results.html'
+                sh 'trivy image --format template --template "/home/sarah/html.tpl" -o trivy-results.html pipeline-react:latest'
                 // sh 'trivy --format json --output trivy-results.json pipeline-react:latest'
             }
 
