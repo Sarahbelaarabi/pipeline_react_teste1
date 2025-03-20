@@ -159,8 +159,9 @@ pipeline {
             steps{
                 sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
                 // sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
-                sh 'trivy image --format template --template "./html.tpl" -o trivy-results.html pipeline-react:latest'
-               echo 'Trivy scan completed. Results saved to trivy-results.html'
+            //     sh 'trivy image --format template --template "./html.tpl" -o trivy-results.html pipeline-react:latest'
+            //    echo 'Trivy scan completed. Results saved to trivy-results.html'
+                sh 'trivy --format json --output trivy-results.json pipeline-react:latest'
             }
 
         }
