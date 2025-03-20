@@ -178,7 +178,20 @@ pipeline {
                 }
             }
         }
-
+        
+                stage('Déployer sur Kubernetes') {
+            steps {
+                dir('pipeline') {
+                    withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+                        sh '''
+                            echo "$KUBECONFIG_CONTENT" > kubeconfig
+                            export KUBECONFIG=kubeconfig
+                            kubectl apply -f ../kubernetes-deployment.yaml
+                        '''
+                    }
+                }
+            }
+        }
     }
     post {
         success {
