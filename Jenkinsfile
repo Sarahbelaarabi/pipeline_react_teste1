@@ -140,7 +140,8 @@ pipeline {
                 }
             }
         }
-        // stage('Docker operations(Stop & Remove), Build & Run') {
+        // ankhdm bhada au cas ou hbst pipeline f stage dyal docker operations
+        //  stage('Docker operations(Stop & Remove), Build & Run') {
         //     steps {
         //         dir('pipeline') {
         //             sh '''
@@ -156,8 +157,10 @@ pipeline {
         // }
         stage('scanner docker image avec trivy'){
             steps{
-                sh' trivy image --severity CRITICAL, HIGH pipeline-react:latest'
-                sh'trivy image --format html --output trivy-results.html pipeline-react:latest'
+                script {
+                    sh 'trivy image --severity CRITICAL, HIGH pipeline-react:latest'
+                    sh 'trivy image --format html --output trivy-results.html pipeline-react:latest'
+                }
             }
 
         }
