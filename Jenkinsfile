@@ -130,30 +130,30 @@ pipeline {
         }
 
         //  supprimer  le conteneur Docker  (drnaha bch nsupprimer l'ancien conteneur avant de construire un nouveau)
-        //  stage('Docker operations(Stop & Remove), Build & Run') {
-        //     steps {
-        //         dir('pipeline') {
-        //             sh 'docker stop  react-app-container'
-        //             sh 'docker rm -f react-app-container'
-        //             sh 'docker build -t pipeline-react .'
-        //             sh 'docker run -d -p 3000:3000 --name react-app-container pipeline-react'
-        //         }
-        //     }
-        // }
-        stage('Docker operations(Stop & Remove), Build & Run') {
+         stage('Docker operations(Stop & Remove), Build & Run') {
             steps {
                 dir('pipeline') {
-                    sh '''
-                    if [ "$(docker ps -a -q -f name=react-app-container)" ]; then
-                        docker stop react-app-container
-                        docker rm -f react-app-container
-                    fi
-                    docker build -t pipeline-react .
-                    docker run -d -p 3000:3000 --name react-app-container pipeline-react
-                    '''
+                    sh 'docker stop  react-app-container'
+                    sh 'docker rm -f react-app-container'
+                    sh 'docker build -t pipeline-react .'
+                    sh 'docker run -d -p 3000:3000 --name react-app-container pipeline-react'
                 }
             }
         }
+        // stage('Docker operations(Stop & Remove), Build & Run') {
+        //     steps {
+        //         dir('pipeline') {
+        //             sh '''
+        //             if [ "$(docker ps -a -q -f name=react-app-container)" ]; then
+        //                 docker stop react-app-container
+        //                 docker rm -f react-app-container
+        //             fi
+        //             docker build -t pipeline-react .
+        //             docker run -d -p 3000:3000 --name react-app-container pipeline-react
+        //             '''
+        //         }
+        //     }
+        // }
         stage('scanner docker image avec trivy'){
             steps{
                 sh' trivy image --severity CRITICAL, HIGH pipeline-react:latest'
