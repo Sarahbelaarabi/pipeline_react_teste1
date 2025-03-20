@@ -112,8 +112,8 @@ pipeline {
             steps {
                 dir('pipeline') {
                     sh '''
-                    trivy fs . > trivyfs.txt'
-                    cat trivyfs.txt'
+                    trivy fs . > trivyfs.txt
+                    cat trivyfs.txt
                     '''
                 }
                 //tirvy va scanner le fichier systeme (code source, binaires, dépendances...) et  enregistrer les resultats dans un fichier txt
