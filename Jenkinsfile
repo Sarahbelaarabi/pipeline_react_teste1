@@ -155,16 +155,16 @@ pipeline {
         //         }
         //     }
         // }
-        stage('scanner docker image avec trivy'){
-            steps{
-                // triy va scanner l'image docker et enregistrer les resultats dans un fichier json
-                // serverity => pour filtrer les vulnerabilités par niveau de severité
-                // crITICAL,HIGH => pour afficher les vulnerabilités de niveau critique et haut
-                sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
-                sh 'trivy image --format json --output trivy-results.json pipeline-react:latest'
-            }
+        // stage('scanner docker image avec trivy'){
+        //     steps{
+        //         // triy va scanner l'image docker et enregistrer les resultats dans un fichier json
+        //         // serverity => pour filtrer les vulnerabilités par niveau de severité
+        //         // crITICAL,HIGH => pour afficher les vulnerabilités de niveau critique et haut
+        //         sh' trivy image --severity CRITICAL,HIGH pipeline-react:latest'
+        //         sh 'trivy image --format json --output trivy-results.json pipeline-react:latest'
+        //     }
 
-        }
+        // }
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
