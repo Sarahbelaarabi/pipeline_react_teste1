@@ -179,41 +179,41 @@ pipeline {
             }
         }
 
-stage('Deploy to Kubernetes') {
-    steps {
-        dir('pipeline') {
-           withKubeConfig(
-            caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
-            clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
-            contextName: '', // Laissez vide pour utiliser le contexte par défaut
-            credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
-            namespace: 'default', // Namespace où déployer l'application
-            restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
-            serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
-        ) {
-            sh "kubectl apply -f kubernetes-deployment.yaml"
-        }  
-        }
-    }
-}
-stage('Verify Kubernetes Deployment') {
-    steps {
-        dir('pipeline') {   
-                withKubeConfig(
-            caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
-            clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
-            contextName: '', // Laissez vide pour utiliser le contexte par défaut
-            credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
-            namespace: 'default', // Namespace où vérifier les ressources
-            restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
-            serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
-        ) {
-            sh "kubectl get pods -n default"
-            sh "kubectl get svc -n default"
-        }
-        }
-    }
-}
+// stage('Deploy to Kubernetes') {
+//     steps {
+//         dir('pipeline') {
+//            withKubeConfig(
+//             caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
+//             clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
+//             contextName: '', // Laissez vide pour utiliser le contexte par défaut
+//             credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
+//             namespace: 'default', // Namespace où déployer l'application
+//             restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
+//             serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
+//         ) {
+//             sh "kubectl apply -f kubernetes-deployment.yaml"
+//         }  
+//         }
+//     }
+// }
+// stage('Verify Kubernetes Deployment') {
+//     steps {
+//         dir('pipeline') {   
+//                 withKubeConfig(
+//             caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
+//             clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
+//             contextName: '', // Laissez vide pour utiliser le contexte par défaut
+//             credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
+//             namespace: 'default', // Namespace où vérifier les ressources
+//             restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
+//             serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
+//         ) {
+//             sh "kubectl get pods -n default"
+//             sh "kubectl get svc -n default"
+//         }
+//         }
+//     }
+// }
 
 // stage('Deploy to Kubernetes') {
 //     steps {
@@ -243,8 +243,15 @@ stage('Verify Kubernetes Deployment') {
 //     }
 // }
 
-
-            
+    stage('deploy to kubernetes') {
+         environment {
+        KUBECONFIG = credentials('kubeconfig')
+    }            
+        steps{
+            script {
+                sh 'kubectl apply -f kubernetes-deployment.yaml'
+            }
+        }
     }
     post {
         success {
