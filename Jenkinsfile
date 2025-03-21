@@ -248,12 +248,12 @@ pipeline {
         KUBECONFIG = credentials('kubeconfig')
     }            
         steps{
-            script {
+            dir('pipeline') {
                 sh 'kubectl apply -f kubernetes-deployment.yaml'
             }
         }
     }
-    
+
 }
     post {
         success {
