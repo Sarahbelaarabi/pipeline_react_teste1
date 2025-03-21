@@ -178,19 +178,38 @@ pipeline {
                 }
             }
         }
-        stage('Déployer sur Kubernetes') {
-        steps {
-            dir('pipeline') {
-                withCredentials([string(credentialsId: 'config', variable: 'KUBECONFIG_CONTENT')]) {
-                    sh '''
-                        echo "$KUBECONFIG_CONTENT" > config
-                        export KUBECONFIG=config
-                        kubectl apply -f ../kubernetes-deployment.yaml
-                    '''
-                }
-            }
+
+        stage('Deploy to Kubernetes') {
+    steps {
+        withKubeConfig(
+            caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
+            clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
+            contextName: '', // Laissez vide pour utiliser le contexte par défaut
+            credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
+            namespace: 'default', // Namespace où déployer l'application
+            restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
+            serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
+        ) {
+            sh "kubectl apply -f kubernetes-deployment.yaml"
         }
     }
+}
+stage('Verify Kubernetes Deployment') {
+    steps {
+        withKubeConfig(
+            caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
+            clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
+            contextName: '', // Laissez vide pour utiliser le contexte par défaut
+            credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
+            namespace: 'default', // Namespace où vérifier les ressources
+            restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
+            serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
+        ) {
+            sh "kubectl get pods -n default"
+            sh "kubectl get svc -n default"
+        }
+    }
+}
             
     }
     post {
