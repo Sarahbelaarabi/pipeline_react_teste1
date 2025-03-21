@@ -216,8 +216,8 @@ stage('Deploy to Kubernetes') {
         script {
             // Récupérer le contenu du Secret text
             withCredentials([string(credentialsId: 'k8-cred', variable: 'KUBECONFIG_CONTENT')]) {
-                // Écrire le contenu dans un fichier temporaire
-                writeFile file: 'kubeconfig', text: "${KUBECONFIG_CONTENT}"
+                // Écrire le contenu dans un fichier temporaire sans interpolation
+                writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
             }
         }
 
