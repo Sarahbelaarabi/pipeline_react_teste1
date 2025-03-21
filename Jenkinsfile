@@ -241,7 +241,7 @@ pipeline {
 //             }
 //         }
 //     }
-// }
+
 
     stage('deploy to kubernetes') {
          environment {
@@ -253,6 +253,8 @@ pipeline {
             }
         }
     }
+    
+}
     post {
         success {
             echo 'Le pipeline a réussi BRAVO SARAH !'
