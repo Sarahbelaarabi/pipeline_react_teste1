@@ -249,7 +249,10 @@ pipeline {
     }            
         steps{
             dir('pipeline') {
-                sh 'kubectl apply -f kubernetes-deployment.yaml'
+                sh '''
+                kubectl apply -f kubernetes-deployment.yaml
+                minikube service react-app-service --url
+                '''
             }
         }
     }
