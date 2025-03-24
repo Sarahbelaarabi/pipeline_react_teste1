@@ -180,8 +180,10 @@ pipeline {
         }
 
     stage('Deploy to Kubernetes') {
-        withEnv(["KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config"]) {
+        steps {
+              withEnv(["KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config"]) {
             sh 'kubectl apply -f kubernetes-deployment.yaml'
+            }
         }
     }
 
