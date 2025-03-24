@@ -243,28 +243,33 @@ pipeline {
 //     }
 
 
-    stage('deploy to kubernetes') {
-         environment {
-        KUBECONFIG = credentials('kubeconfig')
-    }            
-        steps{
-            dir('pipeline') {
-                withKubeConfig(
-                caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
-                clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
-                contextName: '', // Laissez vide pour utiliser le contexte par défaut
-                credentialsId: 'kubeconfig', // ID de la credential configurée dans Jenkins
-                namespace: 'default', // Namespace où déployer l'application
-                restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
-                serverUrl: 'https://127.0.0.1:61114' // URL de l'API Kubernetes (vérifiez qu'elle correspond à votre cluster)
-            )
-            {
-                sh 'kubectl apply -f kubernetes-deployment.yaml'
-            }
+    // stage('deploy to kubernetes') {
+    //      environment {
+    //     KUBECONFIG = credentials('kubeconfig')
+    // }            
+    //     steps{
+    //         dir('pipeline') {
+    //             sh 'kubectl apply -f kubernetes-deployment.yaml'
+    //         }
+    //     }
+    // }
+        stage('deploy to kubernetes') {
+        steps {
+            withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+                script {
+                    // Écrire le contenu du Secret Text dans un fichier temporaire
+                    writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
+                    // Définir la variable d'environnement KUBECONFIG pour pointer vers ce fichier
+                    withEnv(['KUBECONFIG=kubeconfig']) {
+                        dir('pipeline') {
+                            // Appliquer le fichier Kubernetes
+                            sh 'kubectl apply -f kubernetes-deployment.yaml'
+                        }
+                    }
+                }
             }
         }
     }
-
 }
     post {
         success {
