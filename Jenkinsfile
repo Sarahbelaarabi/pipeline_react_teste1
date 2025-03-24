@@ -179,114 +179,11 @@ pipeline {
             }
         }
 
-// stage('Deploy to Kubernetes') {
-//     steps {
-//         dir('pipeline') {
-//            withKubeConfig(
-//             caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
-//             clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
-//             contextName: '', // Laissez vide pour utiliser le contexte par défaut
-//             credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
-//             namespace: 'default', // Namespace où déployer l'application
-//             restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
-//             serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
-//         ) {
-//             sh "kubectl apply -f kubernetes-deployment.yaml"
-//         }  
-//         }
-//     }
-// }
-// stage('Verify Kubernetes Deployment') {
-//     steps {
-//         dir('pipeline') {   
-//                 withKubeConfig(
-//             caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
-//             clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
-//             contextName: '', // Laissez vide pour utiliser le contexte par défaut
-//             credentialsId: 'k8-cred', // ID de la credential configurée dans Jenkins
-//             namespace: 'default', // Namespace où vérifier les ressources
-//             restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
-//             serverUrl: 'https://127.0.0.1:51378' // URL de l'API Kubernetes
-//         ) {
-//             sh "kubectl get pods -n default"
-//             sh "kubectl get svc -n default"
-//         }
-//         }
-//     }
-// }
-
-// stage('Deploy to Kubernetes') {
-//     steps {
-//         script {
-//             // Récupérer le contenu du Secret text
-//             withCredentials([string(credentialsId: 'k8-cred', variable: 'KUBECONFIG_CONTENT')]) {
-//                 // Écrire le contenu dans un fichier temporaire sans interpolation
-//                 writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
-//             }
-//         }
-
-//         // Utiliser le fichier kubeconfig temporaire
-//         withEnv(['KUBECONFIG=kubeconfig']) {
-//             sh "kubectl apply -f kubernetes-deployment.yaml"
-//         }
-//     }
-// }
-// stage('Verify Kubernetes Deployment') {
-//     steps {
-//         script {
-//             // Utiliser le fichier kubeconfig temporaire
-//             withEnv(['KUBECONFIG=kubeconfig']) {
-//                 sh "kubectl get pods -n default"
-//                 sh "kubectl get svc -n default"
-//             }
-//         }
-//     }
-
-
-    // stage('deploy to kubernetes') {
-    //      environment {
-    //     KUBECONFIG = credentials('kubeconfig')
-    // }            
-    //     steps{
-    //         dir('pipeline') {
-    //             sh 'kubectl apply -f kubernetes-deployment.yaml --validate=false'
-    //         }
-    //     }
-    // }
-
-
-
-    // stage('Check Kubectl') {
-    //         steps {
-    //             sh 'kubectl get pods'
-    //         }
-    // }
-
-     stage('Deploy to Kubernetes') {
-            steps {
-                sh 'export KUBECONFIG=/var/lib/jenkins/.kube/config && kubectl apply -f kubernetes-deployment.yaml'
-            }
+    stage('Deploy to Kubernetes') {
+        withEnv(["KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config"]) {
+            sh 'kubectl apply -f kubernetes-deployment.yaml'
         }
-    
-
-
-    //     stage('deploy to kubernetes') {
-    //     steps {
-    //         withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-    //             script {
-    //                 // Écrire le contenu du Secret Text dans un fichier temporaire
-    //                 writeFile file: 'kubeconfig', text: KUBECONFIG_CONTENT
-    //                 // Définir la variable d'environnement KUBECONFIG pour pointer vers ce fichier
-    //                 withEnv(['KUBECONFIG=kubeconfig']) {
-    //                     dir('pipeline') {
-    //                         // Appliquer le fichier Kubernetes
-    //                         sh 'kubectl apply -f kubernetes-deployment.yaml'
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    }
 
 }
     post {
