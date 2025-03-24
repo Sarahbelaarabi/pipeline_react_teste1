@@ -256,14 +256,20 @@ pipeline {
 
 
 
-    stage('Check Kubectl') {
+    // stage('Check Kubectl') {
+    //         steps {
+    //             sh 'kubectl get pods'
+    //         }
+    // }
+
+     stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl get pods'
+                sh 'export KUBECONFIG=/var/lib/jenkins/.kube/config && kubectl apply -f kubernetes-deployment.yaml'
             }
-    }
-
-
+        }
     
+
+
     //     stage('deploy to kubernetes') {
     //     steps {
     //         withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
