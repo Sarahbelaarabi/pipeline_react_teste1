@@ -243,16 +243,27 @@ pipeline {
 //     }
 
 
-    stage('deploy to kubernetes') {
-         environment {
-        KUBECONFIG = credentials('kubeconfig')
-    }            
-        steps{
-            dir('pipeline') {
-                sh 'kubectl apply -f kubernetes-deployment.yaml --validate=false'
+    // stage('deploy to kubernetes') {
+    //      environment {
+    //     KUBECONFIG = credentials('kubeconfig')
+    // }            
+    //     steps{
+    //         dir('pipeline') {
+    //             sh 'kubectl apply -f kubernetes-deployment.yaml --validate=false'
+    //         }
+    //     }
+    // }
+
+
+
+    stage('Check Kubectl') {
+            steps {
+                sh 'kubectl get pods'
             }
-        }
     }
+
+
+    
     //     stage('deploy to kubernetes') {
     //     steps {
     //         withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
