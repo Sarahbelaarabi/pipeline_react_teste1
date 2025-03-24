@@ -249,10 +249,18 @@ pipeline {
     }            
         steps{
             dir('pipeline') {
-                sh '''
-                kubectl apply -f kubernetes-deployment.yaml
-                minikube service react-app-service --url
-                '''
+                withKubeConfig(
+                caCertificate: '', // Laissez vide si vous utilisez un fichier kubeconfig
+                clusterName: 'minikube', // Nom du cluster dans votre kubeconfig
+                contextName: '', // Laissez vide pour utiliser le contexte par défaut
+                credentialsId: 'kubeconfig', // ID de la credential configurée dans Jenkins
+                namespace: 'default', // Namespace où déployer l'application
+                restrictKubeConfigAccess: false, // Autoriser l'accès au fichier kubeconfig
+                serverUrl: 'https://127.0.0.1:61114' // URL de l'API Kubernetes (vérifiez qu'elle correspond à votre cluster)
+            )
+            {
+                sh 'kubectl apply -f kubernetes-deployment.yaml'
+            }
             }
         }
     }
